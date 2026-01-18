@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/michael-portfolio/static/css/main.eebabaab.css",
+    "main.js": "/michael-portfolio/static/js/main.dbd9b48e.js",
+    "static/js/453.4b064e17.chunk.js": "/michael-portfolio/static/js/453.4b064e17.chunk.js",
+    "index.html": "/michael-portfolio/index.html",
+    "main.eebabaab.css.map": "/michael-portfolio/static/css/main.eebabaab.css.map",
+    "main.dbd9b48e.js.map": "/michael-portfolio/static/js/main.dbd9b48e.js.map",
+    "453.4b064e17.chunk.js.map": "/michael-portfolio/static/js/453.4b064e17.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eebabaab.css",
+    "static/js/main.dbd9b48e.js"
+  ]
+}

@@ -1,0 +1,10 @@
+# robots.txt for Michael Perera Portfolio
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://michaelperera.dev/sitemap.xml
+
+# Disallow access to build artifacts
+Disallow: /static/js/*.map
+Disallow: /static/css/*.map
