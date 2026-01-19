@@ -227,7 +227,7 @@ const Portfolio = () => {
               <div className="skills-container">
                 <h3>Technologies I work with:</h3>
                 <div className="skills-grid">
-                  {['React', 'JavaScript', 'TypeScript', 'Java', 'Python', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Firebase', 'REST APIs', 'Financial APIs', 'CSS/SCSS'].map((skill) => (
+                  {['Java', 'Python', 'React', 'JavaScript', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Firebase', 'REST APIs', 'Financial APIs', 'CSS/SCSS'].map((skill) => (
                     <span key={skill} className="skill-tag">{skill}</span>
                   ))}
                 </div>
