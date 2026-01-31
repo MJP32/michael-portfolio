@@ -196,7 +196,7 @@ const Portfolio = () => {
       <main id="main-content" className="container">
         <header>
           <h1>Michael Perera</h1>
-          <p className="subtitle">Showcasing my latest web development projects</p>
+          <p className="subtitle">Backend Engineer | Java | Fintech & Trading Systems</p>
         </header>
 
         <section id="projects" aria-label="Projects">
@@ -258,19 +258,21 @@ const Portfolio = () => {
           <div className="about-content">
             <div className="about-text">
               <p>
-                I'm a passionate web developer with a focus on creating modern,
-                user-friendly applications. I specialize in building full-stack
-                solutions using React, Node.js, and other cutting-edge technologies.
+                I'm a backend engineer specializing in high-performance Java systems
+                for the financial services industry. With deep expertise in building
+                scalable, low-latency trading platforms and risk management systems,
+                I focus on delivering robust solutions that handle millions of transactions.
               </p>
               <p>
-                My projects range from educational platforms to financial tools,
-                each crafted with attention to detail and a commitment to delivering
-                exceptional user experiences.
+                My experience spans developing dark pool matching engines, real-time
+                market data pipelines, and enterprise risk analytics platforms. I'm
+                passionate about fintech innovation, from algorithmic trading systems
+                to regulatory compliance solutions like MiFID II reporting.
               </p>
               <div className="skills-container">
                 <h3>Technologies I work with:</h3>
                 <div className="skills-grid">
-                  {['Java', 'Python', 'React', 'JavaScript', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Firebase', 'REST APIs', 'Financial APIs', 'CSS/SCSS'].map((skill) => (
+                  {['Java', 'Spring Boot', 'Python', 'Kafka', 'PostgreSQL', 'Redis', 'Microservices', 'REST APIs', 'FIX Protocol', 'Docker', 'Kubernetes', 'AWS', 'Low-Latency Systems', 'Financial APIs'].map((skill) => (
                     <span key={skill} className="skill-tag">{skill}</span>
                   ))}
                 </div>
