@@ -13,6 +13,9 @@ const Portfolio = () => {
     return saved || 'dark';
   });
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = [
@@ -89,21 +92,38 @@ const Portfolio = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
-  const openResumeModal = () => setIsResumeModalOpen(true);
+  const openResumeModal = () => setIsPasswordModalOpen(true);
+  const closePasswordModal = () => {
+    setIsPasswordModalOpen(false);
+    setPasswordInput('');
+    setPasswordError(false);
+  };
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (passwordInput === 'abc123') {
+      setIsPasswordModalOpen(false);
+      setIsResumeModalOpen(true);
+      setPasswordInput('');
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+    }
+  };
   const closeResumeModal = () => {
     setIsResumeModalOpen(false);
     setSelectedProject(null);
   };
 
-  // Handle escape key and body scroll lock for modal
+  // Handle escape key and body scroll lock for modals
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isResumeModalOpen) {
-        closeResumeModal();
+      if (e.key === 'Escape') {
+        if (isPasswordModalOpen) closePasswordModal();
+        if (isResumeModalOpen) closeResumeModal();
       }
     };
 
-    if (isResumeModalOpen) {
+    if (isResumeModalOpen || isPasswordModalOpen) {
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEscape);
     } else {
@@ -114,7 +134,7 @@ const Portfolio = () => {
       document.body.style.overflow = '';
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [isResumeModalOpen]);
+  }, [isResumeModalOpen, isPasswordModalOpen]);
 
   useEffect(() => {
     // Generate floating particles
@@ -319,6 +339,47 @@ const Portfolio = () => {
           </nav>
         </div>
       </footer>
+
+      {isPasswordModalOpen && (
+        <div className="resume-modal-overlay" onClick={closePasswordModal}>
+          <div className="password-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+            <button className="resume-modal-close" onClick={closePasswordModal} aria-label="Close modal">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div className="password-content">
+              <div className="password-icon">🔒</div>
+              <h2>Protected Content</h2>
+              <p className="password-description">
+                These work projects contain proprietary implementation details,
+                system architectures, and confidential business logic from enterprise
+                fintech systems. Access is restricted to authorized viewers only.
+              </p>
+              <form onSubmit={handlePasswordSubmit}>
+                <input
+                  type="password"
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    setPasswordError(false);
+                  }}
+                  placeholder="Enter password"
+                  className={`password-input ${passwordError ? 'error' : ''}`}
+                  autoFocus
+                />
+                {passwordError && <span className="password-error">Incorrect password</span>}
+                <button type="submit" className="password-submit">
+                  Unlock
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isResumeModalOpen && (
         <div className="resume-modal-overlay" onClick={closeResumeModal}>
