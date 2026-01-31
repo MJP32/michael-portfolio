@@ -16,6 +16,8 @@ const Portfolio = () => {
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pendingProject, setPendingProject] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = [
@@ -92,26 +94,37 @@ const Portfolio = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
-  const openResumeModal = () => setIsPasswordModalOpen(true);
+  const openResumeModal = () => setIsResumeModalOpen(true);
+  const closeResumeModal = () => {
+    setIsResumeModalOpen(false);
+    setSelectedProject(null);
+  };
   const closePasswordModal = () => {
     setIsPasswordModalOpen(false);
     setPasswordInput('');
     setPasswordError(false);
+    setPendingProject(null);
+  };
+  const handleProjectClick = (projectName) => {
+    if (isAuthenticated) {
+      setSelectedProject(projectName);
+    } else {
+      setPendingProject(projectName);
+      setIsPasswordModalOpen(true);
+    }
   };
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
     if (passwordInput === 'abc123') {
       setIsPasswordModalOpen(false);
-      setIsResumeModalOpen(true);
+      setIsAuthenticated(true);
+      setSelectedProject(pendingProject);
+      setPendingProject(null);
       setPasswordInput('');
       setPasswordError(false);
     } else {
       setPasswordError(true);
     }
-  };
-  const closeResumeModal = () => {
-    setIsResumeModalOpen(false);
-    setSelectedProject(null);
   };
 
   // Handle escape key and body scroll lock for modals
@@ -218,6 +231,13 @@ const Portfolio = () => {
           <h1>Michael Perera</h1>
           <p className="subtitle">Backend Engineer | Java | Fintech & Trading Systems</p>
         </header>
+
+        <a href="#contact" className="scroll-indicator" aria-label="Scroll to contact">
+          <span>Get in touch</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </a>
 
         <section id="projects" aria-label="Projects">
           <h2 className="section-title">Projects</h2>
@@ -341,7 +361,7 @@ const Portfolio = () => {
       </footer>
 
       {isPasswordModalOpen && (
-        <div className="resume-modal-overlay" onClick={closePasswordModal}>
+        <div className="password-modal-overlay" onClick={closePasswordModal}>
           <div className="password-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
             <button className="resume-modal-close" onClick={closePasswordModal} aria-label="Close modal">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -419,7 +439,7 @@ const Portfolio = () => {
                               style={{ borderColor: project.color, cursor: hasDetails ? 'pointer' : 'default' }}
                               onClick={() => {
                                 if (hasDetails) {
-                                  setSelectedProject(project.id);
+                                  handleProjectClick(project.id);
                                 }
                               }}
                             >
