@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://mjp32.github.io/michael-portfolio/sitemap.xml
+Sitemap: https://mikeperera.com/sitemap.xml
 
 # Disallow access to build artifacts
 Disallow: /static/js/*.map

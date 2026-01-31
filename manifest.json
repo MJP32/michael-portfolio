@@ -1,7 +1,7 @@
 {
   "short_name": "MP Portfolio",
-  "name": "Michael Perera - Web Developer Portfolio",
-  "description": "Full-stack web developer specializing in React, Java, Node.js, and financial technologies.",
+  "name": "Michael Perera - Java Backend Engineer",
+  "description": "Senior Java Backend Engineer specializing in high-performance trading systems, fintech solutions, and enterprise applications.",
   "icons": [
     {
       "src": "favicon-32.png",
@@ -28,5 +28,5 @@
   "orientation": "portrait-primary",
   "scope": ".",
   "lang": "en-US",
-  "categories": ["portfolio", "business", "productivity"]
+  "categories": ["portfolio", "business", "finance", "technology"]
 }
