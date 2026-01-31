@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Portfolio.css';
+import { projectGroups } from './projectsData';
+import DarkPoolMatchingEngine from './DarkPoolMatchingEngine';
+import VarCvar from './VarCvar';
+import MonolithToMicroservice from './MonolithToMicroservice';
+import IonGroup from './IonGroup';
 
 const Portfolio = () => {
   const particlesRef = useRef(null);
@@ -7,6 +12,8 @@ const Portfolio = () => {
     const saved = localStorage.getItem('theme');
     return saved || 'dark';
   });
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = [
     {
@@ -15,7 +22,7 @@ const Portfolio = () => {
       url: "www.etfvaluepro.com",
       link: "https://www.etfvaluepro.com",
       description: "A powerful ETF analysis and valuation tool helping investors make informed decisions with comprehensive market data and insights.",
-      screenshot: "/screenshots/etfvaluepro.png",
+      screenshot: `${process.env.PUBLIC_URL}/screenshots/etfvaluepro.png`,
       icon: (
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -28,7 +35,7 @@ const Portfolio = () => {
       url: "www.eggyeggs.com",
       link: "https://www.eggyeggs.com",
       description: "An interactive learning platform for mastering Python and Java programming, featuring hands-on tutorials, coding challenges, and practical projects.",
-      screenshot: "/screenshots/eggyeggs.png",
+      screenshot: `${process.env.PUBLIC_URL}/screenshots/eggyeggs.png`,
       icon: (
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <ellipse cx="12" cy="13" rx="7" ry="9" strokeWidth="2"></ellipse>
@@ -41,7 +48,7 @@ const Portfolio = () => {
       url: "www.fsrslearn.com",
       link: "https://www.fsrslearn.com",
       description: "An innovative learning platform designed to help students master concepts through spaced repetition and active recall techniques.",
-      screenshot: "/screenshots/fsrslearn.png",
+      screenshot: `${process.env.PUBLIC_URL}/screenshots/fsrslearn.png`,
       icon: (
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -54,7 +61,7 @@ const Portfolio = () => {
       url: "www.sringlish.com",
       link: "https://www.sringlish.com",
       description: "A comprehensive platform for learning Sinhala, offering interactive lessons, vocabulary tools, and cultural insights for language learners.",
-      screenshot: "/screenshots/sringlish.png",
+      screenshot: `${process.env.PUBLIC_URL}/screenshots/sringlish.png`,
       icon: <span style={{fontSize: '1.8rem', fontWeight: '700', color: 'white'}}>අ</span>,
       screenshotIcon: <span style={{fontSize: '4rem', fontWeight: '700'}}>අ</span>
     },
@@ -64,7 +71,7 @@ const Portfolio = () => {
       url: "www.suzannedesilva.com",
       link: "https://www.suzannedesilva.com",
       description: "A professional portfolio website showcasing creative work and achievements with elegant design and seamless user experience.",
-      screenshot: "/screenshots/suzannedesilva.png",
+      screenshot: `${process.env.PUBLIC_URL}/screenshots/suzannedesilva.png`,
       icon: (
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -81,6 +88,33 @@ const Portfolio = () => {
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
+
+  const openResumeModal = () => setIsResumeModalOpen(true);
+  const closeResumeModal = () => {
+    setIsResumeModalOpen(false);
+    setSelectedProject(null);
+  };
+
+  // Handle escape key and body scroll lock for modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isResumeModalOpen) {
+        closeResumeModal();
+      }
+    };
+
+    if (isResumeModalOpen) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEscape);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isResumeModalOpen]);
 
   useEffect(() => {
     // Generate floating particles
@@ -148,6 +182,13 @@ const Portfolio = () => {
           </div>
         </div>
         <span className="toggle-label">{theme === 'dark' ? 'Dark' : 'Light'}</span>
+      </button>
+
+      <button className="resume-button" onClick={openResumeModal} aria-label="View Resume Projects">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span className="resume-label">Resume</span>
       </button>
 
       <main id="main-content" className="container">
@@ -274,6 +315,69 @@ const Portfolio = () => {
           </nav>
         </div>
       </footer>
+
+      {isResumeModalOpen && (
+        <div className="resume-modal-overlay" onClick={closeResumeModal}>
+          <div className="resume-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
+            <button className="resume-modal-close" onClick={closeResumeModal} aria-label="Close modal">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {selectedProject === 'Dark Pool Matching Engine' ? (
+              <DarkPoolMatchingEngine onBack={() => setSelectedProject(null)} />
+            ) : selectedProject === 'Var/CVar' ? (
+              <VarCvar onBack={() => setSelectedProject(null)} />
+            ) : selectedProject === 'Monolith to Microservice' ? (
+              <MonolithToMicroservice onBack={() => setSelectedProject(null)} />
+            ) : selectedProject === 'OpenLink Derivatives' ? (
+              <IonGroup onBack={() => setSelectedProject(null)} />
+            ) : (
+              <>
+                <h2 id="resume-modal-title" className="resume-modal-header">Work Projects</h2>
+                <div className="resume-modal-content">
+                  {projectGroups.map((group) => (
+                    <div key={group.title} className="resume-group">
+                      <div className="resume-group-header" style={{ borderLeftColor: group.color }}>
+                        <span className="resume-group-icon">{group.icon}</span>
+                        <h3 style={{ color: group.color }}>{group.title}</h3>
+                        <span className="resume-group-count">{group.projects.length} projects</span>
+                      </div>
+                      <div className="resume-projects-grid">
+                        {group.projects.map((project) => {
+                          const hasDetails = ['Dark Pool Matching Engine', 'Var/CVar', 'Monolith to Microservice', 'OpenLink Derivatives'].includes(project.id);
+                          return (
+                            <div
+                              key={project.id}
+                              className="resume-project-card"
+                              style={{ borderColor: project.color, cursor: hasDetails ? 'pointer' : 'default' }}
+                              onClick={() => {
+                                if (hasDetails) {
+                                  setSelectedProject(project.id);
+                                }
+                              }}
+                            >
+                              <div className="resume-project-header">
+                                <span className="resume-project-icon">{project.icon}</span>
+                                <h4>{project.name}</h4>
+                              </div>
+                              <p className="resume-project-description">{project.description}</p>
+                              {hasDetails && (
+                                <span style={{ fontSize: '0.75rem', color: '#3b82f6', marginTop: '0.5rem', display: 'block' }}>Click to view details →</span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
