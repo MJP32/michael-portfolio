@@ -226,18 +226,18 @@ const Portfolio = () => {
         </button>
       </div>
 
+      <a href="#contact" className="scroll-indicator" aria-label="Scroll to contact">
+        <span>Get in touch</span>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </a>
+
       <main id="main-content" className="container">
         <header>
           <h1>Michael Perera</h1>
           <p className="subtitle">Backend Engineer | Java | Fintech & Trading Systems</p>
         </header>
-
-        <a href="#contact" className="scroll-indicator" aria-label="Scroll to contact">
-          <span>Get in touch</span>
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </a>
 
         <section id="projects" aria-label="Projects">
           <h2 className="section-title">Projects</h2>
